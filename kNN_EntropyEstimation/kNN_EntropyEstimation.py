@@ -32,7 +32,7 @@ def estimate_entropy(samples, k, method='maxNorm', fac=1.):
         corr_dist = np.linalg.norm(corr, axis=-1)
         eps = 2 * np.partition(corr_dist, k, axis=-1)[:, k]
 
-        entropy_estimate = dim * np.mean(np.log(eps) / fac)
+        entropy_estimate = dim * np.mean(np.log(eps / fac))
         entropy_estimate = entropy_estimate - psi(k) + psi(N) + np.log(c(dim, 2))
 
     elif method == 'maxNorm':
