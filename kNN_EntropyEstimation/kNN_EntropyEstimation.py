@@ -3,10 +3,16 @@ import scipy.special
 
 
 def psi(i):
+    """
+    Digamma function for convenience
+    """
     return scipy.special.digamma(i)
 
 
-def c(d, p):
+def c(d):
+    """
+    Volume of the d-dimensional unit ball divided by 2**d
+    """
     return np.pi**(d / 2) / scipy.special.gamma(1 + d / 2) / 2**d
 
 
@@ -33,7 +39,7 @@ def estimate_entropy(samples, k, method='maxNorm', fac=1.):
         eps = 2 * np.partition(corr_dist, k, axis=-1)[:, k]
 
         entropy_estimate = dim * np.mean(np.log(eps / fac))
-        entropy_estimate = entropy_estimate - psi(k) + psi(N) + np.log(c(dim, 2))
+        entropy_estimate = entropy_estimate - psi(k) + psi(N) + np.log(c(dim))
 
     elif method == 'maxNorm':
         eps = 2 * np.partition(np.max(np.abs(corr), axis=-1), k, axis=-1)[:, k]
